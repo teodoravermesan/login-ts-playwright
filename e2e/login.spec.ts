@@ -5,7 +5,6 @@ test.beforeEach('Perform Login', async ({ page }) => {
     const pm = new PageManager(page)
     await page.goto('https://practicetestautomation.com/practice-test-login/')
     await pm.onLoginPage().testLogin(process.env.USERNAME, process.env.PASSWORD)
-    page.waitForTimeout(3000)
 });
 
 test('Verify new page URL', async ({ page }) => {
@@ -24,7 +23,7 @@ test('Verify success message text', async ({ page }) => {
 test('Verify "Log out"', async ({ page }) => {
     const pm = new PageManager(page)
     await pm.onLoggedinPage().logOut()
-    page.waitForTimeout(3000)
+    await page.waitForURL('https://practicetestautomation.com/practice-test-login/'); // Waits for the URL to change
     expect(page.url()).toEqual('https://practicetestautomation.com/practice-test-login/')
 });
 
