@@ -5,6 +5,7 @@ test.beforeEach('Perform Login', async ({ page }) => {
     const pm = new PageManager(page)
     await page.goto('https://practicetestautomation.com/practice-test-login/')
     await pm.onLoginPage().testLogin(process.env.USERNAME, process.env.PASSWORD)
+    page.waitForTimeout(3000)
 });
 
 test('Verify new page URL', async ({ page }) => {
