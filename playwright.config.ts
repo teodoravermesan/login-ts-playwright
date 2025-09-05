@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
+export const baseURL = 'https://practicetestautomation.com/'
 dotenv.config();
 
 /**
@@ -27,11 +28,16 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: process.env.STAGING === '1' ? 'http://staging.example.test/' : 'https://practicetestautomation.com/',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    // Capture screenshot after each test failure.
+    screenshot: 'only-on-failure',
+
+    // Record trace only when retrying a test for the first time.
     trace: 'on-first-retry',
+
+    // Record video only when retrying a test for the first time.
+    video: 'on-first-retry'
   },
 
   /* Configure projects for major browsers */
