@@ -1,19 +1,21 @@
 import { test, expect } from '@playwright/test'
 import { PageManager } from '../pages/pageManager';
-import { baseURL } from "../playwright.config"
+import { baseURL as configBaseURL } from "../playwright.config";
+const rawBaseURL = typeof configBaseURL === 'string' ? configBaseURL : process.env.BASE_URL || 'http://localhost:3000';
+const baseURL = rawBaseURL.replace(/\/+$/, ''); // Remove trailing slashes
 
 test.beforeEach('Perform Login', async ({ page }) => {
     const pm = new PageManager(page)
-    await page.goto('/practice-test-login/')
-    await pm.onLoginPage().testLogin(process.env.USERNAME, process.env.PASSWORD)
+    await page.goto(`${baseURL}/practice-test-login/`)
+    const username = process.env.USERNAME
+    const password = process.env.PASSWORD
+    if (!username || !password) {
+        throw new Error('USERNAME and PASSWORD environment variables must be set')
+    }
+    await pm.onLoginPage().testLogin(username, password)
 });
-
-test('Verify new page URL', async ({ page }) => {
-    const currentURL = page.url();
-    // Build expected full URL from baseURL + relative path
-    const expectedURL = new URL('logged-in-successfully/', baseURL).href;
-
-    expect(currentURL).toContain(expectedURL);
+test('Verify user is redirected to logged-in page after login', async ({ page }) => {
+    await expect(page).toHaveURL('/logged-in-successfully/');
 });
 
 test('Verify success message text', async ({ page }) => {
@@ -26,8 +28,10 @@ test('Verify success message text', async ({ page }) => {
 
 test('Verify "Log out"', async ({ page }) => {
     const pm = new PageManager(page)
-    await pm.onLoggedinPage().logOut()
-    await page.waitForURL('/practice-test-login/');  // relative to baseURL
-    const expectedURL = new URL('/practice-test-login/', baseURL).href;
+    await Promise.all([
+        page.waitForURL(`${baseURL}/practice-test-login/`, { timeout: 10000 }),
+        pm.onLoggedinPage().logOut()
+    ]);
+    const expectedURL = `${baseURL}/practice-test-login/`;
     expect(page.url()).toEqual(expectedURL);
 });

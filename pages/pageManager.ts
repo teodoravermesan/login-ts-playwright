@@ -1,4 +1,4 @@
-import { Page, expect } from "@playwright/test"
+import { Page } from "@playwright/test"
 import { LoginPage } from '../pages/login'
 import { LoggedInPage } from '../pages/loggedIn'
 export class PageManager {

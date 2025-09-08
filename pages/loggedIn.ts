@@ -1,17 +1,15 @@
-import { Locator, Page } from "@playwright/test"
+import { Locator, Page } from "@playwright/test";
 
-export class LoggedInPage{
-    page: Page;
-    loggoutButton: Locator;
+export class LoggedInPage {
+  readonly page: Page;
+  readonly logoutButton: Locator;
 
+  constructor(page: Page) {
+    this.page = page;
+    this.logoutButton = page.getByRole('link', { name: 'Log out' });
+  }
 
-    constructor(page) {
-        this.page = page;
-        this.loggoutButton = page.getByRole('link', { name: 'Log out' })
-    }
-
-    async logOut(){
-        await this.loggoutButton.click()
-    }
-
+  async logOut(): Promise<void> {
+    await this.logoutButton.click();
+  }
 }
