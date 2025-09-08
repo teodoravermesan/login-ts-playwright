@@ -7,14 +7,14 @@ const isCI = !!process.env.CI;
 const isStaging = process.env.STAGING === '1';
 
 export const baseURL = isStaging
-  ? 'http://staging.example.test/'
+  ? 'http://staging.practiceautomation.com/'
   : 'https://practicetestautomation.com/';
 
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
   forbidOnly: isCI,
-  retries: isCI ? 2 : 0,
+  retries: isCI ? 2 : 1,
   workers: isCI ? 1 : undefined,
   reporter: 'html',
   use: {

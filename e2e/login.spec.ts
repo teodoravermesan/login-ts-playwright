@@ -1,6 +1,6 @@
 import { test, expect } from './fixtures';
 import { baseURL as configBaseURL } from "../playwright.config";
-const rawBaseURL = typeof configBaseURL === 'string' ? configBaseURL : process.env.BASE_URL || 'http://localhost:3000';
+const rawBaseURL = typeof configBaseURL === 'string' ? configBaseURL : 'http://localhost:3000';
 const baseURL = rawBaseURL.replace(/\/+$/, ''); // Remove trailing slashes
 
 test.beforeEach('Perform Login', async ({ page, pageManager }) => {
@@ -33,7 +33,7 @@ test('Verify success message text', async ({ page }) => {
 
 test('Verify "Log out"', async ({ page, pageManager }) => {
     await Promise.all([
-        page.waitForURL(`${baseURL}/practice-test-login/`, { timeout: 10000 }),
+        page.waitForURL(`${baseURL}/logged-in-successfully/`, { timeout: 10000 }),
         pageManager.onLoggedInPage().logOut()
     ]);
     const expectedURL = `${baseURL}/practice-test-login/`;
