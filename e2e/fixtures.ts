@@ -1,12 +1,12 @@
-import { test as base, expect, Page } from '@playwright/test';
-import { PageManager } from '../pages/pageManager';
+import { test as base, expect } from '@playwright/test';
+import { PageManager } from '../pages/PageManager';
 
 // Define a custom fixture for PageManager
-export const test = base.extend<{ pm: PageManager }>({
-  pm: async ({ page }, use) => {
-    const pm = new PageManager(page);
-    await use(pm);
-  },
+export const test = base.extend<{ pageManager: PageManager }>({
+    pageManager: async ({ page }, use) => {
+        const pageManager = new PageManager(page);
+        await use(pageManager);
+    },
 });
 
 export { expect };

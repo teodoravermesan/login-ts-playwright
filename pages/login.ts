@@ -1,7 +1,6 @@
 import { Locator, Page } from "@playwright/test"
 
-
-export class LoginPage{
+export class LoginPage {
     page: Page;
     username: Locator;
     password: Locator;
@@ -14,7 +13,7 @@ export class LoginPage{
         this.loginButton = page.getByRole('button', { name: 'Submit' });
     }
 
-    async testLogin(username: string, password: string){
+    async testLogin(username: string, password: string) {
         await this.username.fill(username)
         await this.password.fill(password)
         await this.loginButton.click()
