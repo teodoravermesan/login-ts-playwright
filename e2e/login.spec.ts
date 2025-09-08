@@ -1,11 +1,9 @@
-import { test, expect } from '@playwright/test'
-import { PageManager } from '../pages/pageManager';
+import { test, expect } from './fixtures';
 import { baseURL as configBaseURL } from "../playwright.config";
 const rawBaseURL = typeof configBaseURL === 'string' ? configBaseURL : process.env.BASE_URL || 'http://localhost:3000';
 const baseURL = rawBaseURL.replace(/\/+$/, ''); // Remove trailing slashes
 
-test.beforeEach('Perform Login', async ({ page }) => {
-    const pm = new PageManager(page)
+test.beforeEach('Perform Login', async ({ page, pm }) => {
     await page.goto(`${baseURL}/practice-test-login/`)
     const username = process.env.USERNAME
     const password = process.env.PASSWORD
@@ -15,8 +13,7 @@ test.beforeEach('Perform Login', async ({ page }) => {
     await pm.onLoginPage().testLogin(username, password)
 });
 
-test('Login with invalid credentials shows error message', async ({ page }) => {
-    const pm = new PageManager(page);
+test('Login with invalid credentials shows error message', async ({ page, pm }) => {
     await page.goto(`${baseURL}/practice-test-login/`);
     await pm.onLoginPage().testLogin('invalidUser', 'invalidPass');
     // Adjust selector/text below to match the actual error message on your login page
@@ -35,8 +32,7 @@ test('Verify success message text', async ({ page }) => {
     ).toBeTruthy();
 });
 
-test('Verify "Log out"', async ({ page }) => {
-    const pm = new PageManager(page)
+test('Verify "Log out"', async ({ page, pm }) => {
     await Promise.all([
         page.waitForURL(`${baseURL}/practice-test-login/`, { timeout: 10000 }),
         pm.onLoggedinPage().logOut()
