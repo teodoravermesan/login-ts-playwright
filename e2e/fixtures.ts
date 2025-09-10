@@ -1,11 +1,16 @@
 import { test as base, expect } from '@playwright/test';
 import { PageManager } from '../pages/pageManager';
 
-export const test = base.extend<{ login: PageManager, navigate: string }>({
+export const test = base.extend<{ login: PageManager, navigate: string, manager: PageManager }>({
 
     navigate: [async ({ page }, use) => {
         await page.goto('/practice-test-login/');
         await use('');
+    }, { auto: true }],
+
+    manager: [async ({ page }, use) => {
+        const pageManager = new PageManager(page);
+        await use(pageManager);
     }, { auto: true }],
 
     login: [async ({ page }, use) => {

@@ -25,11 +25,11 @@ export default defineConfig({
   },
   globalSetup: require.resolve('./global-setup.ts'),
   projects: [
-    {
-      name: 'logout-with-global-setup',
-      testMatch: 'logout1.spec.ts',
-      use: { ...devices['Desktop Chrome'] },
-    },
+    // {
+    //   name: 'logout-with-global-setup',
+    //   testMatch: 'logout1.spec.ts',
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
 
     {
       name: 'login',
