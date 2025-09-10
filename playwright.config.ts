@@ -25,15 +25,35 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'chromium',
+      name: 'logout-with-login-fixture-chrome',
+      testMatch: 'login.spec.ts',
       use: { ...devices['Desktop Chrome'] },
     },
+
     {
-      name: 'firefox',
+      name: 'login',
+      testMatch: 'login-setup.ts',
+      use: { ...devices['Desktop Chrome'] },
+    },
+
+    {
+      name: 'logout',
+      testMatch: 'logout.spec.ts',
+      use: {
+        ...devices['Desktop Chrome'],
+
+      },
+      dependencies: ['login']
+
+    },
+    {
+      name: 'logout-with-login-fixture-firefox',
+      testMatch: 'login.spec.ts',
       use: { ...devices['Desktop Firefox'] },
     },
     {
-      name: 'webkit',
+      name: 'logout-with-login-fixture-safari',
+      testMatch: 'login.spec.ts',
       use: { ...devices['Desktop Safari'] },
     },
   ],
