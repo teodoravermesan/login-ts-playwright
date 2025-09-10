@@ -10,7 +10,7 @@ export const test = base.extend<{ pageManager: PageManager, login: string }>({
         await use(pageManager);
     },
 
-    login: async ({ page , pageManager}, use) => {
+    login: [async ({ page , pageManager}, use) => {
         await page.goto('/practice-test-login/');
         await page.goto(`${baseURL}/practice-test-login/`)
         const username = process.env.USERNAME
@@ -20,7 +20,8 @@ export const test = base.extend<{ pageManager: PageManager, login: string }>({
         }
         await pageManager.onLoginPage().testLogin(username, password)
         await use('');
-    }
+        console.log('Logged in successfully');
+    }, {auto: true }],
 });
 
 export { expect };
