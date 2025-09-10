@@ -1,24 +1,13 @@
 import { test, expect } from './fixtures';
 import { baseURL as configBaseURL } from "../playwright.config";
 const rawBaseURL = typeof configBaseURL === 'string' ? configBaseURL : 'http://localhost:3000';
-const baseURL = rawBaseURL.replace(/\/+$/, ''); // Remove trailing slashes
+const baseURL = rawBaseURL.replace(/\/+$/, ''); 
 
-test.beforeEach('Perform Login', async ({ page, pageManager }) => {
-    await page.goto(`${baseURL}/practice-test-login/`)
-    const username = process.env.USERNAME
-    const password = process.env.PASSWORD
-    if (!username || !password) {
-        throw new Error('USERNAME and PASSWORD environment variables must be set')
-    }
-    await pageManager.onLoginPage().testLogin(username, password)
-});
-
-
-test('Verify user is redirected to logged-in page after login', async ({ page }) => {
+test('Verify user is redirected to logged-in page after login', async ({ page , login}) => {
     await expect(page).toHaveURL('/logged-in-successfully/');
 });
 
-test('Verify success message text', async ({ page }) => {
+test('Verify success message text', async ({ page , login}) => {
     const pageText = await page.textContent('body');
     expect(
         pageText?.toLowerCase().includes('congratulations') ||
@@ -26,7 +15,7 @@ test('Verify success message text', async ({ page }) => {
     ).toBeTruthy();
 });
 
-test('Verify "Log out"', async ({ page, pageManager }) => {
+test('Verify "Log out"', async ({ page, pageManager, login }) => {
     await Promise.all([
         page.waitForURL(`${baseURL}/logged-in-successfully/`, { timeout: 10000 }),
         pageManager.onLoggedInPage().logOut()
