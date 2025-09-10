@@ -15,10 +15,10 @@ test('Verify success message text', async ({ page }) => {
     ).toBeTruthy();
 });
 
-test('Verify "Log out"', async ({ page, pageManager }) => {
+test('Verify "Log out"', async ({ page, login }) => {
     await Promise.all([
         page.waitForURL(`${baseURL}/logged-in-successfully/`, { timeout: 10000 }),
-        pageManager.onLoggedInPage().logOut()
+        login.onLoggedInPage().logOut()
     ]);
     const expectedURL = `${baseURL}/practice-test-login/`;
     expect(page.url()).toEqual(expectedURL);
