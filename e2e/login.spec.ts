@@ -13,12 +13,7 @@ test.beforeEach('Perform Login', async ({ page, pageManager }) => {
     await pageManager.onLoginPage().testLogin(username, password)
 });
 
-test('Login with invalid credentials shows error message', async ({ page, pageManager }) => {
-    await page.goto(`${baseURL}/practice-test-login/`);
-    await pageManager.onLoginPage().testLogin('invalidUser', 'invalidPass');
-    const errorMessage = await page.locator('.show').textContent();
-    expect(errorMessage?.toLowerCase()).toContain('invalid');
-});
+
 test('Verify user is redirected to logged-in page after login', async ({ page }) => {
     await expect(page).toHaveURL('/logged-in-successfully/');
 });

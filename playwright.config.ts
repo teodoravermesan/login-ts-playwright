@@ -20,8 +20,6 @@ export default defineConfig({
   use: {
     baseURL,
     screenshot: 'only-on-failure',
-
-    // Record trace only when retrying a test for the first time.
     trace: 'on-first-retry',
     video: 'on-first-retry',
   },
@@ -38,29 +36,5 @@ export default defineConfig({
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
-    // Uncomment to test on mobile devices
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-    // Uncomment to test on branded browsers
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
-  // Uncomment to run a local dev server before tests
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !isCI,
-  // },
 });
