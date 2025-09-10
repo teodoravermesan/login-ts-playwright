@@ -23,10 +23,11 @@ export default defineConfig({
     trace: 'on-first-retry',
     video: 'on-first-retry',
   },
+  globalSetup: require.resolve('./global-setup.ts'),
   projects: [
     {
-      name: 'logout-with-login-fixture-chrome',
-      testMatch: 'login.spec.ts',
+      name: 'logout-with-global-setup',
+      testMatch: 'logout1.spec.ts',
       use: { ...devices['Desktop Chrome'] },
     },
 
@@ -48,13 +49,18 @@ export default defineConfig({
     },
     {
       name: 'logout-with-login-fixture-firefox',
-      testMatch: 'login.spec.ts',
+      testMatch: 'login-tests.spec.ts',
       use: { ...devices['Desktop Firefox'] },
     },
     {
       name: 'logout-with-login-fixture-safari',
-      testMatch: 'login.spec.ts',
+         testMatch: 'login-tests.spec.ts',
       use: { ...devices['Desktop Safari'] },
+    },
+    {
+      name: 'logout-with-login-fixture-chrome',
+      testMatch: 'login-tests.spec.ts',
+      use: { ...devices['Desktop Chrome'] },
     },
   ],
 });

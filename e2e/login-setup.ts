@@ -3,7 +3,7 @@
 import { test as setup } from '@playwright/test';
 import { PageManager } from '../pages/pageManager';
 
-setup('Login setup', async ({ page, context }) => {
+setup('Login setup', async ({ page }) => {
   await page.goto('/practice-test-login/');
   const pageManager = new PageManager(page);
 
@@ -16,7 +16,4 @@ setup('Login setup', async ({ page, context }) => {
 
   // Wait until login is fully complete
   await page.waitForURL('**/logged-in-successfully/**');
-
-  // Save session
-  await context.storageState({ path: 'state.json' });
 });
