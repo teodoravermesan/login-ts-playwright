@@ -51,10 +51,14 @@ export default defineConfig({
       name: 'logout-with-login-fixture-firefox',
       testMatch: 'login-tests.spec.ts',
       use: { ...devices['Desktop Firefox'] },
+    }, {
+      name: 'logout-with-login-fixture1',
+      testMatch: 'login-tests.spec copy.ts',
+      use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'logout-with-login-fixture-safari',
-         testMatch: 'login-tests.spec.ts',
+      testMatch: 'login-tests.spec.ts',
       use: { ...devices['Desktop Safari'] },
     },
     {
