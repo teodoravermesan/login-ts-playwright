@@ -1,12 +1,11 @@
-import { test, expect } from '@playwright/test';
-import { PageManager } from '../pages/pageManager';
-import { baseURL as configBaseURL } from "../playwright.config";
-const rawBaseURL = typeof configBaseURL === 'string' ? configBaseURL : 'http://localhost:3000';
-const baseURL = rawBaseURL.replace(/\/+$/, ''); // Remove trailing slashes
+import { test, expect } from './fixtures';
+import { baseURL } from "../playwright.config";
 
-test('Verify "Log out"', async ({ page }) => {
-    const pageManager = new PageManager(page);
-    pageManager.onLoggedInPage().logOut()
-    const expectedURL = `${baseURL}/practice-test-login/`;
-    expect(page.url()).toEqual(expectedURL);
+test('Verify "Log out"', async ({ page, manager }) => {
+    // Since we're already logged in from global setup, we can directly test logout
+    await manager.onLoggedInPage().logOut();
+    
+    // Verify we are redirected to the login page
+    const expectedURL = `${baseURL}practice-test-login/`;
+    await expect(page).toHaveURL(expectedURL);
 });

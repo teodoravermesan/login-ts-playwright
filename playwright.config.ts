@@ -22,14 +22,16 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
     video: 'on-first-retry',
+    // Use stored auth state for all tests
+    storageState: './auth.json',
   },
   globalSetup: require.resolve('./global-setup.ts'),
   projects: [
-    // {
-    //   name: 'logout-with-global-setup',
-    //   testMatch: 'logout1.spec.ts',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'logout-with-global-setup',
+      testMatch: 'logout1.spec.ts',
+      use: { ...devices['Desktop Chrome'] },
+    },
 
     {
       name: 'login',
