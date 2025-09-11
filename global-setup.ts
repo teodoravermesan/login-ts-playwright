@@ -3,8 +3,13 @@ import { PageManager } from './pages/pageManager';
 import { baseURL } from './playwright.config';
 
 export default async function globalSetup() {
-  // 1️⃣ Launch a browser
-  const browser = await chromium.launch({ headless: false });
+  // Check if we're running in CI
+  const isCI = process.env.CI || process.env.GITHUB_ACTIONS;
+  
+  // 1️⃣ Launch a browser (headless in CI, non-headless in local dev)
+  const browser = await chromium.launch({ 
+    headless: isCI ? true : false
+  });
 
   try {
     // 2️⃣ Create a context
